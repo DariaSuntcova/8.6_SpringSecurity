@@ -17,6 +17,12 @@ public class Controller {
         this.service = service;
     }
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello!";
+    }
+
+
     @GetMapping("/persons/by-city")
     public List<Person> getPersons(@RequestParam("city") String city) {
         return service.getPersonsByCity(city);
