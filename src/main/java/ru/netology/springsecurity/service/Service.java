@@ -25,4 +25,7 @@ public class Service {
     public Optional<Person> getNameSurname(String name, String surname) {
         return repository.findByNameAndSurname(name, surname);
     }
+    public List<Person> getAllNamePersons() {
+        return repository.getAllNamePersons();
+    }
 }

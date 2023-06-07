@@ -16,21 +16,33 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/hello").permitAll()
-                        .requestMatchers("/persons/**").authenticated())
-                .formLogin(withDefaults());
-        return http.build();
-    }
+//    @Bean
+//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+//                        .requestMatchers("/hello").permitAll()
+//                        .requestMatchers("/persons/**").authenticated())
+//                .formLogin(withDefaults());
+//        return http.build();
+//    }
 
     @Bean
     UserDetailsService users() {
-        UserDetails user = User.withDefaultPasswordEncoder()
+        User.UserBuilder users = User.withDefaultPasswordEncoder();
+        UserDetails admin = users
                 .username("admin")
-                .password("password")
+                .password("pass1")
+                .roles("READ", "WRITE", "DELETE")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails user = users
+                .username("user")
+                .password("pass2")
+                .roles("READ")
+                .build();
+        UserDetails daria = users
+                .username("daria")
+                .password("pass3")
+                .roles("DELETE")
+                .build();
+        return new InMemoryUserDetailsManager(admin, user, daria);
     }
 }

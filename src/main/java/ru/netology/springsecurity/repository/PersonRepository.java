@@ -21,5 +21,8 @@ public interface PersonRepository extends JpaRepository<Person, PersonPK> {
     @Query("select p from Person p where lower(p.name) = lower(:name) and lower(p.surname) = lower(:surname)")
     Optional<Person> findByNameAndSurname(@Param("name") String name, @Param("surname") String surname);
 
+    @Query("SELECT name FROM Person")
+    List<Person> getAllNamePersons();
+
 
 }
